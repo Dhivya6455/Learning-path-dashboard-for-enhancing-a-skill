@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Personalized Learning Path - SkillPath AI</title>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+  <div class="bg-blob blob-1"></div>
+  <div class="bg-blob blob-2"></div>
+
+  <div id="app-layout">
+    <aside class="sidebar">
+      <div class="sidebar-header">
+        <div class="brand-icon"><i class="fa-solid fa-graduation-cap"></i></div>
+        <div class="brand-title">Skill<span>Path</span> AI</div>
+      </div>
+      <nav class="sidebar-nav">
+        <div class="nav-section-label">Main Menu</div>
+        <a href="dashboard.html" class="nav-item"><i class="fa-solid fa-chart-pie"></i><span>Dashboard</span></a>
+        <a href="skills.html" class="nav-item"><i class="fa-solid fa-lightbulb"></i><span>Skills Catalog</span></a>
+        <a href="learningpath.html" class="nav-item active"><i class="fa-solid fa-route"></i><span>Learning Path</span></a>
+        <a href="progress.html" class="nav-item"><i class="fa-solid fa-bars-progress"></i><span>Progress Tracking</span></a>
+        <div class="nav-section-label">Assessments & Certs</div>
+        <a href="quiz.html?type=exam" class="nav-item"><i class="fa-solid fa-shield-halved"></i><span>Final Exam (AI)</span></a>
+        <a href="certificate.html" class="nav-item"><i class="fa-solid fa-award"></i><span>My Certificate</span></a>
+      </nav>
+      <div class="sidebar-footer">
+        <div class="user-mini-profile">
+          <div class="avatar-circle" id="user-avatar-initials">AJ</div>
+          <div style="flex:1; overflow:hidden;">
+            <div id="user-display-name" style="font-weight:600; font-size:0.9rem; color:#fff;">Alex Johnson</div>
+            <div id="user-display-role" style="font-size:0.75rem; color:#94a3b8;">Student Learner</div>
+          </div>
+        </div>
+      </div>
+    </aside>
+
+    <main class="main-content">
+      <header class="top-header">
+        <h1 class="page-title">Personalized Roadmap & Weak Area Analysis</h1>
+        <div class="streak-badge" id="header-streak-days"><i class="fa-solid fa-fire text-amber-500"></i> 5 Day Streak</div>
+      </header>
+
+      <div class="content-body">
+        <!-- Diagnostic Summary Banner -->
+        <div class="glass-card" style="text-align:center; padding:32px; background:var(--primary-gradient); color:#fff; margin-bottom:28px;">
+          <div style="width:90px; height:90px; border-radius:50%; background:#fff; color:var(--primary); display:flex; align-items:center; justify-content:center; font-family:var(--font-heading); font-size:1.8rem; font-weight:800; margin:0 auto 12px;" id="analysis-score-pct">80%</div>
+          <h2 style="font-family:var(--font-heading);">Diagnostic Quiz Results</h2>
+          <p style="opacity:0.9; max-width:550px; margin:6px auto 0;">Your answers have been analyzed by our Java Spring Boot backend to construct a targeted 3-stage learning path.</p>
+        </div>
+
+        <div style="display:grid; grid-template-columns:1fr 1fr; gap:24px; margin-bottom:28px;">
+          <!-- Weak Topics Card -->
+          <div class="glass-card">
+            <div class="card-title"><span><i class="fa-solid fa-triangle-exclamation text-amber-500"></i> Identified Weak Topics</span></div>
+            <ul id="weak-topics-list" style="list-style:none;"></ul>
+          </div>
+
+          <!-- Strong Topics Card -->
+          <div class="glass-card">
+            <div class="card-title"><span><i class="fa-solid fa-circle-check text-green-500"></i> Mastered Topics</span></div>
+            <ul id="strong-topics-list" style="list-style:none;"></ul>
+          </div>
+        </div>
+
+        <!-- 3 Stage Step-by-Step Learning Path -->
+        <div class="glass-card">
+          <div class="card-title">
+            <span><i class="fa-solid fa-route text-blue-600"></i> Step-by-Step Roadmap Modules</span>
+            <a href="quiz.html?type=exam" class="btn btn-primary btn-sm"><i class="fa-solid fa-graduation-cap"></i> Take Final Exam</a>
+          </div>
+
+          <div id="roadmap-cards-container"></div>
+        </div>
+      </div>
+    </main>
+  </div>
+
+  <script src="js/app.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      loadLearningPathPage();
+    });
+  </script>
+</body>
+</html>

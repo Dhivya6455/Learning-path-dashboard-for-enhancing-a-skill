@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Dashboard Overview - SkillPath AI</title>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+  <div class="bg-blob blob-1"></div>
+  <div class="bg-blob blob-2"></div>
+
+  <div id="app-layout">
+    <!-- Sidebar Navigation -->
+    <aside class="sidebar">
+      <div class="sidebar-header">
+        <div class="brand-icon"><i class="fa-solid fa-graduation-cap"></i></div>
+        <div class="brand-title">Skill<span>Path</span> AI</div>
+      </div>
+      <nav class="sidebar-nav">
+        <div class="nav-section-label">Main Menu</div>
+        <a href="dashboard.html" class="nav-item active"><i class="fa-solid fa-chart-pie"></i><span>Dashboard</span></a>
+        <a href="skills.html" class="nav-item"><i class="fa-solid fa-lightbulb"></i><span>Skills Catalog</span></a>
+        <a href="learningpath.html" class="nav-item"><i class="fa-solid fa-route"></i><span>Learning Path</span></a>
+        <a href="progress.html" class="nav-item"><i class="fa-solid fa-bars-progress"></i><span>Progress Tracking</span></a>
+        <div class="nav-section-label">Assessments & Certs</div>
+        <a href="quiz.html?type=exam" class="nav-item"><i class="fa-solid fa-shield-halved"></i><span>Final Exam (AI)</span></a>
+        <a href="certificate.html" class="nav-item"><i class="fa-solid fa-award"></i><span>My Certificate</span></a>
+      </nav>
+      <div class="sidebar-footer">
+        <div class="user-mini-profile" style="display:flex; align-items:center; justify-content:space-between;">
+          <div style="display:flex; align-items:center; gap:10px;">
+            <div class="avatar-circle" id="user-avatar-initials">JD</div>
+            <div style="overflow:hidden;">
+              <div id="user-display-name" style="font-weight:600; font-size:0.9rem; color:#fff;">John Doe</div>
+              <div id="user-display-role" style="font-size:0.75rem; color:#94a3b8;">Student Learner</div>
+            </div>
+          </div>
+          <button onclick="handleLogout()" title="Log Out" style="background:none; border:none; color:#ef4444; cursor:pointer; font-size:1rem; padding:4px;">
+            <i class="fa-solid fa-right-from-bracket"></i>
+          </button>
+        </div>
+      </div>
+    </aside>
+
+    <!-- Main Body Area -->
+    <main class="main-content">
+      <header class="top-header">
+        <h1 class="page-title">Dashboard Overview</h1>
+        <div class="streak-badge" id="header-streak-days"><i class="fa-solid fa-fire text-amber-500"></i> 1 Day Streak</div>
+      </header>
+
+      <div class="content-body">
+        <!-- Welcome Banner -->
+        <div class="welcome-banner">
+          <div>
+            <h2 style="font-family:var(--font-heading); font-size:1.8rem; font-weight:800;" id="welcome-title">Welcome Back! 👋</h2>
+            <p style="opacity:0.95; margin-top:4px;" id="welcome-subtitle">Your personalized learning path and course recommendations are ready based on your diagnostic test evaluation.</p>
+            <div style="margin-top:16px; display:flex; gap:12px;">
+              <a href="learningpath.html" class="btn btn-primary"><i class="fa-solid fa-route"></i> Resume Learning Path</a>
+              <a href="skills.html" class="btn btn-secondary"><i class="fa-solid fa-sliders"></i> Switch Skill Track</a>
+            </div>
+          </div>
+        </div>
+
+        <!-- Quick Stats Grid -->
+        <div class="quick-stats-grid">
+          <div class="glass-card stat-card">
+            <div class="stat-icon blue"><i class="fa-solid fa-trophy"></i></div>
+            <div style="flex:1;">
+              <div class="stat-value" id="dash-test-score">--%</div>
+              <div style="font-size:0.85rem; color:var(--text-muted);">Diagnostic Test Score</div>
+              <div class="progress-bar-container">
+                <div class="progress-bar-fill" id="dash-test-score-fill" style="width:0%;"></div>
+              </div>
+            </div>
+          </div>
+
+          <div class="glass-card stat-card">
+            <div class="stat-icon green"><i class="fa-solid fa-code"></i></div>
+            <div>
+              <div class="stat-value" id="dash-active-skill-name">Web Development</div>
+              <div style="font-size:0.85rem; color:var(--text-muted);">Selected Technology Track</div>
+            </div>
+          </div>
+
+          <div class="glass-card stat-card">
+            <div class="stat-icon purple"><i class="fa-solid fa-triangle-exclamation"></i></div>
+            <div>
+              <div class="stat-value" id="dash-weak-count">0 Detected</div>
+              <div style="font-size:0.85rem; color:var(--text-muted);">Identified Weak Areas</div>
+            </div>
+          </div>
+
+          <div class="glass-card stat-card">
+            <div class="stat-icon blue" style="background:#dbeafe; color:#1d4ed8;"><i class="fa-solid fa-bars-progress"></i></div>
+            <div style="flex:1;">
+              <div class="stat-value" id="dash-course-progress-val">0%</div>
+              <div style="font-size:0.85rem; color:var(--text-muted);">Course Completion Progress</div>
+              <div class="progress-bar-container">
+                <div class="progress-bar-fill" id="dash-course-progress-fill" style="width:0%;"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Weak Areas & Recommended Courses Section -->
+        <div style="display:grid; grid-template-columns:1fr 1fr; gap:24px; margin-bottom:28px;" class="dash-split-grid">
+          <!-- Identified Weak Areas Card -->
+          <div class="glass-card">
+            <div class="card-title">
+              <span style="color:#b91c1c;"><i class="fa-solid fa-triangle-exclamation"></i> Identified Weak Areas</span>
+              <span class="difficulty-badge badge-advanced" id="weak-areas-badge">Target Focus</span>
+            </div>
+            <p style="font-size:0.88rem; color:var(--text-muted); margin-bottom:16px;">
+              Based on your diagnostic assessment, our system identified the following topic areas for targeted improvement:
+            </p>
+            <div id="dash-weak-areas-list">
+              <div style="padding:12px; background:#fef2f2; border-radius:8px; color:#991b1b; font-size:0.88rem;">
+                <i class="fa-solid fa-circle-notch fa-spin"></i> Loading weak area evaluation...
+              </div>
+            </div>
+          </div>
+
+          <!-- Recommended Courses Card -->
+          <div class="glass-card">
+            <div class="card-title">
+              <span style="color:var(--primary);"><i class="fa-solid fa-graduation-cap"></i> Recommended Courses</span>
+              <span class="difficulty-badge badge-beginner">AI Tailored</span>
+            </div>
+            <p style="font-size:0.88rem; color:var(--text-muted); margin-bottom:16px;">
+              Courses dynamically recommended to strengthen your weak topics and achieve skill mastery:
+            </p>
+            <div id="dash-recommended-courses-list">
+              <div style="padding:12px; background:var(--primary-subtle); border-radius:8px; color:var(--primary); font-size:0.88rem;">
+                <i class="fa-solid fa-circle-notch fa-spin"></i> Loading recommended courses...
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Active Skill Learning Path Topics -->
+        <div class="glass-card">
+          <div class="card-title">
+            <span><i class="fa-solid fa-list-check text-blue-600"></i> Active Learning Modules</span>
+            <a href="learningpath.html" class="btn btn-outline" style="padding:4px 10px; font-size:0.8rem;">View Full Path</a>
+          </div>
+          <div id="dash-active-skills-list"></div>
+        </div>
+      </div>
+    </main>
+  </div>
+
+  <script src="js/app.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      loadDashboardData();
+    });
+  </script>
+</body>
+</html>

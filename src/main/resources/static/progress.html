@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Progress Analytics - SkillPath AI</title>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+  <div class="bg-blob blob-1"></div>
+  <div class="bg-blob blob-2"></div>
+
+  <div id="app-layout">
+    <aside class="sidebar">
+      <div class="sidebar-header">
+        <div class="brand-icon"><i class="fa-solid fa-graduation-cap"></i></div>
+        <div class="brand-title">Skill<span>Path</span> AI</div>
+      </div>
+      <nav class="sidebar-nav">
+        <div class="nav-section-label">Main Menu</div>
+        <a href="dashboard.html" class="nav-item"><i class="fa-solid fa-chart-pie"></i><span>Dashboard</span></a>
+        <a href="skills.html" class="nav-item"><i class="fa-solid fa-lightbulb"></i><span>Skills Catalog</span></a>
+        <a href="learningpath.html" class="nav-item"><i class="fa-solid fa-route"></i><span>Learning Path</span></a>
+        <a href="progress.html" class="nav-item active"><i class="fa-solid fa-bars-progress"></i><span>Progress Tracking</span></a>
+        <div class="nav-section-label">Assessments & Certs</div>
+        <a href="quiz.html?type=exam" class="nav-item"><i class="fa-solid fa-shield-halved"></i><span>Final Exam (AI)</span></a>
+        <a href="certificate.html" class="nav-item"><i class="fa-solid fa-award"></i><span>My Certificate</span></a>
+      </nav>
+      <div class="sidebar-footer">
+        <div class="user-mini-profile">
+          <div class="avatar-circle" id="user-avatar-initials">AJ</div>
+          <div style="flex:1; overflow:hidden;">
+            <div id="user-display-name" style="font-weight:600; font-size:0.9rem; color:#fff;">Alex Johnson</div>
+            <div id="user-display-role" style="font-size:0.75rem; color:#94a3b8;">Student Learner</div>
+          </div>
+        </div>
+      </div>
+    </aside>
+
+    <main class="main-content">
+      <header class="top-header">
+        <h1 class="page-title">Progress Analytics & Metrics</h1>
+        <div class="streak-badge" id="header-streak-days"><i class="fa-solid fa-fire text-amber-500"></i> 5 Day Streak</div>
+      </header>
+
+      <div class="content-body">
+        <div class="quick-stats-grid" style="margin-bottom:28px;">
+          <div class="glass-card stat-card">
+            <div class="stat-icon blue"><i class="fa-solid fa-chart-pie"></i></div>
+            <div>
+              <div class="stat-value" id="prog-overall-pct">45%</div>
+              <div style="font-size:0.85rem; color:var(--text-muted);">Overall Skill Mastery</div>
+            </div>
+          </div>
+
+          <div class="glass-card stat-card">
+            <div class="stat-icon green"><i class="fa-solid fa-check-double"></i></div>
+            <div>
+              <div class="stat-value" id="prog-topics-val">6 Completed</div>
+              <div style="font-size:0.85rem; color:var(--text-muted);">Roadmap Modules</div>
+            </div>
+          </div>
+
+          <div class="glass-card stat-card">
+            <div class="stat-icon purple"><i class="fa-solid fa-fire"></i></div>
+            <div>
+              <div class="stat-value" id="prog-streak-val">5 Days</div>
+              <div style="font-size:0.85rem; color:var(--text-muted);">Active Learning Streak</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="glass-card" style="text-align:center; padding:40px;">
+          <i class="fa-solid fa-certificate text-blue-600" style="font-size:3rem; margin-bottom:14px;"></i>
+          <h2 style="font-family:var(--font-heading); margin-bottom:8px;">Verified Certification Progress</h2>
+          <p style="color:var(--text-muted); max-width:500px; margin:0 auto 20px;">Complete your learning roadmap modules and take the AI-proctored final exam to earn downloadable certificates.</p>
+          <div style="font-family:var(--font-heading); font-size:1.5rem; font-weight:700; color:var(--primary);" id="prog-certs-val">1 Earned</div>
+        </div>
+      </div>
+    </main>
+  </div>
+
+  <script src="js/app.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      loadProgressPage();
+    });
+  </script>
+</body>
+</html>

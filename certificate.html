@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Official Certificate - SkillPath AI</title>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link rel="stylesheet" href="css/styles.css">
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+</head>
+<body>
+  <div class="bg-blob blob-1"></div>
+  <div class="bg-blob blob-2"></div>
+
+  <div id="app-layout">
+    <aside class="sidebar">
+      <div class="sidebar-header">
+        <div class="brand-icon"><i class="fa-solid fa-graduation-cap"></i></div>
+        <div class="brand-title">Skill<span>Path</span> AI</div>
+      </div>
+      <nav class="sidebar-nav">
+        <div class="nav-section-label">Main Menu</div>
+        <a href="dashboard.html" class="nav-item"><i class="fa-solid fa-chart-pie"></i><span>Dashboard</span></a>
+        <a href="skills.html" class="nav-item"><i class="fa-solid fa-lightbulb"></i><span>Skills Catalog</span></a>
+        <a href="learningpath.html" class="nav-item"><i class="fa-solid fa-route"></i><span>Learning Path</span></a>
+        <a href="progress.html" class="nav-item"><i class="fa-solid fa-bars-progress"></i><span>Progress Tracking</span></a>
+        <div class="nav-section-label">Assessments & Certs</div>
+        <a href="quiz.html?type=exam" class="nav-item"><i class="fa-solid fa-shield-halved"></i><span>Final Exam (AI)</span></a>
+        <a href="certificate.html" class="nav-item active"><i class="fa-solid fa-award"></i><span>My Certificate</span></a>
+      </nav>
+      <div class="sidebar-footer">
+        <div class="user-mini-profile">
+          <div class="avatar-circle" id="user-avatar-initials">AJ</div>
+          <div style="flex:1; overflow:hidden;">
+            <div id="user-display-name" style="font-weight:600; font-size:0.9rem; color:#fff;">Alex Johnson</div>
+            <div id="user-display-role" style="font-size:0.75rem; color:#94a3b8;">Student Learner</div>
+          </div>
+        </div>
+      </div>
+    </aside>
+
+    <main class="main-content">
+      <header class="top-header">
+        <div>
+          <h1 class="page-title">Verified Certificate of Completion</h1>
+        </div>
+        <div style="display:flex; align-items:center; gap:16px;">
+          <div class="streak-badge" id="header-streak-days"><i class="fa-solid fa-fire text-amber-500"></i> 5 Day Streak</div>
+          <button class="btn btn-sm btn-outline" onclick="handleLogout()"><i class="fa-solid fa-arrow-right-from-bracket"></i> Logout</button>
+        </div>
+      </header>
+
+      <div class="content-body">
+        <!-- Skill Selector Dropdown Header -->
+        <div class="glass-card" style="padding:16px 24px; margin-bottom:24px; display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:16px;">
+          <div style="display:flex; align-items:center; gap:12px;">
+            <i class="fa-solid fa-award" style="font-size:1.5rem; color:var(--primary);"></i>
+            <div>
+              <div style="font-weight:700; font-size:1rem;">Selected Certificate Track</div>
+              <div style="font-size:0.82rem; color:var(--text-muted);">Select skill track to view certification status</div>
+            </div>
+          </div>
+          <div>
+            <select id="cert-skill-selector" onchange="onCertSkillChanged(this.value)" style="padding:8px 16px; border-radius:8px; border:1px solid var(--border-color); background:var(--bg-card-solid); font-family:var(--font-body); font-weight:600; color:var(--text-dark); cursor:pointer;">
+              <option value="webdev">Web Development</option>
+              <option value="java">Java Fundamentals</option>
+              <option value="python">Python Programming</option>
+              <option value="datascience">Data Science & Analytics</option>
+              <option value="ai">AI & Machine Learning</option>
+            </select>
+          </div>
+        </div>
+
+        <!-- LOCKED STATE (When Course Subtopics or Final Exam not completed) -->
+        <div id="cert-locked-box" class="glass-card" style="display:none; text-align:center; padding:48px 24px; background:var(--bg-card);">
+          <div style="width:80px; height:80px; margin:0 auto 20px; border-radius:50%; background:#fee2e2; color:#ef4444; display:flex; align-items:center; justify-content:center; font-size:2.2rem;">
+            <i class="fa-solid fa-lock"></i>
+          </div>
+          <h2 style="font-family:var(--font-heading); font-size:1.8rem; font-weight:800; color:var(--text-dark); margin-bottom:10px;">
+            Certificate Locked
+          </h2>
+          <p style="font-size:1.05rem; color:var(--text-muted); max-width:560px; margin:0 auto 16px; line-height:1.6;" id="cert-lock-message">
+            You must complete all course subtopics and pass the 20-question Final Certification Exam to unlock your verified certificate.
+          </p>
+          <div style="margin-bottom:24px; font-weight:700; color:var(--primary); font-size:1.05rem;" id="cert-lock-subtopics-status">
+            Subtopics Progress: 0 of 12 (0%)
+          </div>
+          <div style="display:flex; justify-content:center; gap:16px; flex-wrap:wrap;">
+            <a href="course.html" id="cert-lock-course-btn" class="btn btn-outline btn-lg">
+              <i class="fa-solid fa-book-open"></i> Complete Subtopics in Course
+            </a>
+            <a href="quiz.html?type=exam" id="cert-lock-exam-btn" class="btn btn-primary btn-lg">
+              <i class="fa-solid fa-shield-halved"></i> Take Final Exam Now
+            </a>
+          </div>
+        </div>
+
+        <!-- UNLOCKED STATE (When Final Exam IS passed) -->
+        <div id="cert-unlocked-box" style="display:none;">
+          <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:24px;">
+            <div>
+              <h2 style="font-family:var(--font-heading); color:var(--success); display:flex; align-items:center; gap:8px;">
+                <i class="fa-solid fa-circle-check"></i> Certificate Verified & Unlocked
+              </h2>
+              <p style="color:var(--text-muted);">Evaluated by Java Spring Boot Backend Engine</p>
+            </div>
+            <button class="btn btn-success btn-lg" onclick="downloadPDF()">
+              <i class="fa-solid fa-file-arrow-down"></i> Download Certificate (PDF)
+            </button>
+          </div>
+
+          <!-- Printable Certificate Node -->
+          <div class="certificate-wrapper" id="printable-certificate">
+            <div class="certificate-inner-border">
+              <div class="certificate-badge-seal"><i class="fa-solid fa-award"></i></div>
+              <h2 style="font-family:'Outfit', serif; font-size:2.2rem; font-weight:800; text-transform:uppercase; letter-spacing:2px;">Certificate of Completion</h2>
+              <div style="font-size:0.9rem; color:#64748b; text-transform:uppercase; letter-spacing:3px; margin-bottom:20px;">SkillPath AI Academy • Verified Achievement</div>
+              
+              <p style="color:#64748b; margin-bottom:8px;">This is proudly presented to</p>
+              <div style="font-family:'Outfit', sans-serif; font-size:2.4rem; font-weight:800; color:var(--primary); border-bottom:2px solid var(--primary); display:inline-block; padding:0 24px 4px; margin-bottom:16px;" id="cert-user-name">
+                Alex Johnson
+              </div>
+
+              <p style="font-size:1.05rem; color:#475569; max-width:580px; margin:0 auto 28px; line-height:1.7;">
+                for demonstrating excellence and passing the AI-proctored final assessment in
+                <br>
+                <strong style="color:#0f172a; font-size:1.25rem;" id="cert-skill-name">Web Development</strong>
+                <br>
+                with an evaluation score of <strong id="cert-score" style="color:var(--primary);">90%</strong>.
+              </p>
+
+              <div style="display:flex; justify-content:space-between; align-items:flex-end; margin-top:36px; padding-top:20px; border-top:1px solid var(--border-color);">
+                <div style="text-align:left;">
+                  <div style="border-top:1.5px solid #0f172a; width:160px; padding-top:4px; font-weight:700; font-size:0.85rem;">Board Director</div>
+                  <div style="font-size:0.75rem; color:#64748b;">SkillPath AI Academy</div>
+                </div>
+                <div style="font-family:monospace; font-size:0.8rem; color:#94a3b8; text-align:right;">
+                  Issued: <span id="cert-date">2026-07-24</span><br>
+                  ID: <span id="cert-code">CERT-2026-8942</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </main>
+  </div>
+
+  <script src="js/data.js"></script>
+  <script src="js/app.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      loadCertificatePage();
+    });
+  </script>
+</body>
+</html>

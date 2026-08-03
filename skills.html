@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Skills Catalog - SkillPath AI</title>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+  <div class="bg-blob blob-1"></div>
+  <div class="bg-blob blob-2"></div>
+
+  <div id="app-layout">
+    <aside class="sidebar">
+      <div class="sidebar-header">
+        <div class="brand-icon"><i class="fa-solid fa-graduation-cap"></i></div>
+        <div class="brand-title">Skill<span>Path</span> AI</div>
+      </div>
+      <nav class="sidebar-nav">
+        <div class="nav-section-label">Main Menu</div>
+        <a href="dashboard.html" class="nav-item"><i class="fa-solid fa-chart-pie"></i><span>Dashboard</span></a>
+        <a href="skills.html" class="nav-item active"><i class="fa-solid fa-lightbulb"></i><span>Skills Catalog</span></a>
+        <a href="learningpath.html" class="nav-item"><i class="fa-solid fa-route"></i><span>Learning Path</span></a>
+        <a href="progress.html" class="nav-item"><i class="fa-solid fa-bars-progress"></i><span>Progress Tracking</span></a>
+        <div class="nav-section-label">Assessments & Certs</div>
+        <a href="quiz.html?type=exam" class="nav-item"><i class="fa-solid fa-shield-halved"></i><span>Final Exam (AI)</span></a>
+        <a href="certificate.html" class="nav-item"><i class="fa-solid fa-award"></i><span>My Certificate</span></a>
+      </nav>
+      <div class="sidebar-footer">
+        <div class="user-mini-profile">
+          <div class="avatar-circle" id="user-avatar-initials">AJ</div>
+          <div style="flex:1; overflow:hidden;">
+            <div id="user-display-name" style="font-weight:600; font-size:0.9rem; color:#fff;">Alex Johnson</div>
+            <div id="user-display-role" style="font-size:0.75rem; color:#94a3b8;">Student Learner</div>
+          </div>
+        </div>
+      </div>
+    </aside>
+
+    <main class="main-content">
+      <header class="top-header">
+        <div>
+          <h1 class="page-title">Skills Catalog & Diagnostics</h1>
+        </div>
+        <div style="display:flex; align-items:center; gap:16px;">
+          <div class="streak-badge" id="header-streak-days"><i class="fa-solid fa-fire text-amber-500"></i> 5 Day Streak</div>
+          <button class="btn btn-sm btn-outline" onclick="handleLogout()"><i class="fa-solid fa-arrow-right-from-bracket"></i> Logout</button>
+        </div>
+      </header>
+
+      <div class="content-body">
+        <p style="color:var(--text-muted); margin-bottom:24px;">
+          Select any technology track below to launch your 20-question diagnostic assessment quiz.
+        </p>
+
+        <div class="skills-grid" id="skills-catalog-grid"></div>
+      </div>
+    </main>
+  </div>
+
+  <script src="js/data.js"></script>
+  <script src="js/app.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      loadSkillsCatalogPage();
+    });
+  </script>
+</body>
+</html>

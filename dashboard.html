@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Dashboard - SkillPath AI</title>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+  <div class="bg-blob blob-1"></div>
+  <div class="bg-blob blob-2"></div>
+
+  <div id="app-layout">
+    <!-- Sidebar Navigation -->
+    <aside class="sidebar">
+      <div class="sidebar-header">
+        <div class="brand-icon"><i class="fa-solid fa-graduation-cap"></i></div>
+        <div class="brand-title">Skill<span>Path</span> AI</div>
+      </div>
+      <nav class="sidebar-nav">
+        <div class="nav-section-label">Main Menu</div>
+        <a href="dashboard.html" class="nav-item active"><i class="fa-solid fa-chart-pie"></i><span>Dashboard</span></a>
+        <a href="skills.html" class="nav-item"><i class="fa-solid fa-lightbulb"></i><span>Skills Catalog</span></a>
+        <a href="learningpath.html" class="nav-item"><i class="fa-solid fa-route"></i><span>Learning Path</span></a>
+        <a href="progress.html" class="nav-item"><i class="fa-solid fa-bars-progress"></i><span>Progress Tracking</span></a>
+        <div class="nav-section-label">Assessments & Certs</div>
+        <a href="quiz.html?type=exam" class="nav-item"><i class="fa-solid fa-shield-halved"></i><span>Final Exam (AI)</span></a>
+        <a href="certificate.html" class="nav-item"><i class="fa-solid fa-award"></i><span>My Certificate</span></a>
+      </nav>
+      <div class="sidebar-footer">
+        <div class="user-mini-profile">
+          <div class="avatar-circle" id="user-avatar-initials">GL</div>
+          <div style="flex:1; overflow:hidden;">
+            <div id="user-display-name" style="font-weight:600; font-size:0.9rem; color:#fff;">Guest Learner</div>
+            <div id="user-display-role" style="font-size:0.75rem; color:#94a3b8;">Student Learner</div>
+          </div>
+        </div>
+      </div>
+    </aside>
+
+    <!-- Main Content -->
+    <main class="main-content">
+      <header class="top-header">
+        <div>
+          <h1 class="page-title" id="welcome-title">Welcome Back, Learner! 👋</h1>
+          <div style="font-size:0.88rem; color:var(--text-muted);">Here is your AI-driven skill diagnostic & personal progress summary</div>
+        </div>
+        <div style="display:flex; align-items:center; gap:16px;">
+          <div class="streak-badge" id="header-streak-days"><i class="fa-solid fa-fire text-amber-500"></i> 1 Day Streak</div>
+          <button class="btn btn-sm btn-outline" onclick="handleLogout()"><i class="fa-solid fa-arrow-right-from-bracket"></i> Logout</button>
+        </div>
+      </header>
+
+      <div class="content-body">
+        <!-- Overview Banner -->
+        <div class="glass-card" style="margin-bottom:24px; padding:24px; background:linear-gradient(135deg, rgba(79,70,229,0.08) 0%, rgba(147,51,234,0.08) 100%);">
+          <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:16px;">
+            <div>
+              <span class="difficulty-badge badge-intermediate" id="dash-active-skill-badge">Active Skill Track</span>
+              <h2 style="font-family:var(--font-heading); font-size:1.5rem; font-weight:700; margin-top:6px;" id="dash-active-skill-name">
+                Web Development Mastery
+              </h2>
+              <p style="color:var(--text-muted); font-size:0.9rem; margin-top:4px;">
+                Complete all course subtopics to unlock your AI-Proctored Final Exam and earn your certificate.
+              </p>
+            </div>
+            <div style="display:flex; gap:12px;">
+              <a href="course.html" class="btn btn-primary"><i class="fa-solid fa-book-open"></i> Go to Course Lessons</a>
+              <a href="quiz.html?type=exam" class="btn btn-outline"><i class="fa-solid fa-shield-halved"></i> Take Final Exam</a>
+            </div>
+          </div>
+        </div>
+
+        <!-- Metrics Grid -->
+        <div class="dashboard-grid">
+          <!-- Diagnostic Test Result Card -->
+          <div class="glass-card">
+            <div class="card-title">
+              <span style="color:var(--primary);"><i class="fa-solid fa-vial-circle-check"></i> Diagnostic Assessment Score</span>
+              <span class="difficulty-badge badge-beginner">Initial Evaluation</span>
+            </div>
+            <div style="display:flex; align-items:baseline; gap:12px; margin:16px 0 8px;">
+              <div style="font-size:2.4rem; font-weight:800; font-family:var(--font-heading); color:var(--primary);" id="dash-test-score">75%</div>
+              <div style="font-size:0.85rem; color:var(--text-muted);">Baseline Accuracy</div>
+            </div>
+            <div class="progress-bar-container">
+              <div class="progress-bar-fill" id="dash-test-score-fill" style="width:75%;"></div>
+            </div>
+            <p style="font-size:0.8rem; color:var(--text-muted); margin-top:12px;">
+              Evaluated based on initial 20 MCQ diagnostic test.
+            </p>
+          </div>
+
+          <!-- Overall Course Progress Card -->
+          <div class="glass-card">
+            <div class="card-title">
+              <span style="color:var(--success);"><i class="fa-solid fa-bars-progress"></i> Subtopics Completion</span>
+              <span class="difficulty-badge badge-intermediate">Course Progress</span>
+            </div>
+            <div style="display:flex; align-items:baseline; gap:12px; margin:16px 0 8px;">
+              <div style="font-size:2.4rem; font-weight:800; font-family:var(--font-heading); color:var(--success);" id="dash-course-progress-val">0%</div>
+              <div style="font-size:0.85rem; color:var(--text-muted);">Completed Subtopics</div>
+            </div>
+            <div class="progress-bar-container">
+              <div class="progress-bar-fill" id="dash-course-progress-fill" style="width:0%; background:var(--success);"></div>
+            </div>
+            <p style="font-size:0.8rem; color:var(--text-muted); margin-top:12px;">
+              100% subtopic completion required for final exam.
+            </p>
+          </div>
+        </div>
+
+        <!-- Split Grid: Weak Areas & Recommended Courses -->
+        <div style="display:grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap:24px; margin-bottom:24px;">
+          <!-- Weak Areas Card -->
+          <div class="glass-card">
+            <div class="card-title">
+              <span style="color:var(--danger);"><i class="fa-solid fa-triangle-exclamation"></i> Identified Weak Areas</span>
+              <span class="difficulty-badge badge-advanced" id="dash-weak-count">0 Detected</span>
+            </div>
+            <p style="font-size:0.88rem; color:var(--text-muted); margin-bottom:16px;">
+              Topics requiring target practice based on your assessment results:
+            </p>
+            <div id="dash-weak-areas-list">
+              <div style="padding:12px; background:#fef2f2; border-radius:8px; color:#991b1b; font-size:0.88rem;">
+                <i class="fa-solid fa-circle-notch fa-spin"></i> Loading weak area evaluation...
+              </div>
+            </div>
+          </div>
+
+          <!-- Recommended Courses Card -->
+          <div class="glass-card">
+            <div class="card-title">
+              <span style="color:var(--primary);"><i class="fa-solid fa-graduation-cap"></i> Recommended Courses</span>
+              <span class="difficulty-badge badge-beginner">AI Tailored</span>
+            </div>
+            <p style="font-size:0.88rem; color:var(--text-muted); margin-bottom:16px;">
+              Courses dynamically recommended to strengthen your weak topics and achieve skill mastery:
+            </p>
+            <div id="dash-recommended-courses-list">
+              <div style="padding:12px; background:var(--primary-subtle); border-radius:8px; color:var(--primary); font-size:0.88rem;">
+                <i class="fa-solid fa-circle-notch fa-spin"></i> Loading recommended courses...
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Active Skill Learning Path Topics -->
+        <div class="glass-card">
+          <div class="card-title">
+            <span><i class="fa-solid fa-list-check text-blue-600"></i> Active Learning Modules</span>
+            <a href="learningpath.html" class="btn btn-outline" style="padding:4px 10px; font-size:0.8rem;">View Full Path</a>
+          </div>
+          <div id="dash-active-skills-list"></div>
+        </div>
+      </div>
+    </main>
+  </div>
+
+  <script src="js/data.js"></script>
+  <script src="js/app.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      loadDashboardData();
+    });
+  </script>
+</body>
+</html>

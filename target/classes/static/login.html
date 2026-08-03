@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Sign In - SkillPath AI Platform</title>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link rel="stylesheet" href="css/styles.css">
+</head>
+<body style="display:flex; align-items:center; justify-content:center; min-height:100vh; background-color:var(--bg-main);">
+  <div class="bg-blob blob-1"></div>
+  <div class="bg-blob blob-2"></div>
+
+  <div class="glass-card auth-card">
+    <!-- Left Hero Banner -->
+    <div style="background:var(--primary-gradient); color:#fff; padding:44px; display:flex; flex-direction:column; justify-content:space-between;">
+      <div>
+        <div class="brand-icon" style="width:48px; height:48px; font-size:22px; background:rgba(255,255,255,0.2); margin-bottom:20px;">
+          <i class="fa-solid fa-graduation-cap"></i>
+        </div>
+        <h2 style="font-family:var(--font-heading); font-size:2.1rem; font-weight:800; line-height:1.2; margin-bottom:16px;">
+          SkillPath AI Platform
+        </h2>
+        <p style="opacity:0.95; font-size:0.95rem; line-height:1.6;">
+          Connect to our Spring Boot & MySQL backend for adaptive skill diagnostic evaluation, automated weak area detection, and custom learning paths.
+        </p>
+      </div>
+
+      <div style="font-size:0.85rem; opacity:0.9; background:rgba(0,0,0,0.15); padding:12px 16px; border-radius:8px;">
+        <i class="fa-solid fa-server"></i> Spring Boot REST Endpoint: <strong>POST /api/auth/login</strong>
+      </div>
+    </div>
+
+    <!-- Right Login Form -->
+    <div style="padding:44px;">
+      <!-- Navigation Tabs -->
+      <div class="tab-nav">
+        <a href="login.html" class="tab-link active">Sign In</a>
+        <a href="register.html" class="tab-link">Register</a>
+      </div>
+
+      <!-- Alert Container for Login Error -->
+      <div id="login-alert" class="alert alert-danger" style="display:none;"></div>
+      <div id="login-success" class="alert alert-success" style="display:none;"></div>
+
+      <form onsubmit="handleLogin(event)" novalidate>
+        <!-- Email Input -->
+        <div style="margin-bottom:18px;">
+          <label style="display:block; font-weight:600; font-size:0.88rem; margin-bottom:6px; color:var(--text-dark);">
+            Email Address <span style="color:var(--danger);">*</span>
+          </label>
+          <div class="input-group">
+            <i class="fa-solid fa-envelope input-icon"></i>
+            <input type="email" id="login-email" class="form-control form-control-icon" value="student@skillpath.edu" placeholder="student@skillpath.edu" required style="width:100%; padding:12px 12px 12px 42px; border-radius:8px; border:1px solid var(--border-color); font-family:inherit;">
+          </div>
+        </div>
+
+        <!-- Password Input -->
+        <div style="margin-bottom:24px;">
+          <label style="display:block; font-weight:600; font-size:0.88rem; margin-bottom:6px; color:var(--text-dark);">
+            Password <span style="color:var(--danger);">*</span>
+          </label>
+          <div class="input-group">
+            <i class="fa-solid fa-lock input-icon"></i>
+            <input type="password" id="login-password" class="form-control form-control-icon" value="password123" placeholder="Enter password" required style="width:100%; padding:12px 42px 12px 42px; border-radius:8px; border:1px solid var(--border-color); font-family:inherit;">
+            <button type="button" class="password-toggle-btn" onclick="togglePasswordVisibility('login-password', 'login-pass-icon')">
+              <i class="fa-solid fa-eye" id="login-pass-icon"></i>
+            </button>
+          </div>
+        </div>
+
+        <!-- Submit Button -->
+        <button type="submit" id="login-btn" class="btn btn-primary btn-block btn-lg" style="width:100%;">
+          <i class="fa-solid fa-arrow-right-to-bracket"></i> Sign In to Dashboard
+        </button>
+      </form>
+
+      <div style="margin-top:20px; text-align:center; font-size:0.88rem; color:var(--text-muted);">
+        Don't have an account? <a href="register.html" style="color:var(--primary); font-weight:600; text-decoration:none;">Create a new account</a>
+      </div>
+    </div>
+  </div>
+
+  <script src="js/app.js"></script>
+</body>
+</html>

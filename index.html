@@ -1,0 +1,732 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Learning Path Dashboard - Enhancing Skills</title>
+  
+  <!-- Google Fonts & Font Awesome CDN -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  
+  <!-- Main Stylesheet -->
+  <link rel="stylesheet" href="css/styles.css">
+
+  <!-- External Libraries CDN -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+</head>
+<body>
+
+  <!-- Background Ambient Glow Blobs -->
+  <div class="bg-blob blob-1"></div>
+  <div class="bg-blob blob-2"></div>
+
+  <!-- Main App Shell Container -->
+  <div id="app-container">
+
+    <!-- Sidebar Navigation -->
+    <aside class="sidebar" id="sidebar">
+      <div class="sidebar-header">
+        <div class="brand-icon">
+          <i class="fa-solid fa-graduation-cap"></i>
+        </div>
+        <div class="brand-title">
+          Skill<span>Path</span> AI
+        </div>
+      </div>
+
+      <nav class="sidebar-nav">
+        <div class="nav-section-label">Main Menu</div>
+        <a class="nav-item active" data-view="dashboard">
+          <i class="fa-solid fa-chart-pie"></i>
+          <span>Dashboard</span>
+        </a>
+        <a class="nav-item" data-view="skills">
+          <i class="fa-solid fa-lightbulb"></i>
+          <span>Skills Catalog</span>
+        </a>
+        <a class="nav-item" data-view="path">
+          <i class="fa-solid fa-route"></i>
+          <span>Learning Path</span>
+        </a>
+        <a class="nav-item" data-view="practice">
+          <i class="fa-solid fa-laptop-code"></i>
+          <span>Practice Tasks</span>
+        </a>
+        <a class="nav-item" data-view="progress">
+          <i class="fa-solid fa-bars-progress"></i>
+          <span>Progress Tracking</span>
+        </a>
+
+        <div class="nav-section-label">Assessments & Certs</div>
+        <a class="nav-item" data-view="reassessment">
+          <i class="fa-solid fa-arrow-rotate-right"></i>
+          <span>Reassessment</span>
+        </a>
+        <a class="nav-item" data-view="exam">
+          <i class="fa-solid fa-shield-halved"></i>
+          <span>Final Exam (AI)</span>
+        </a>
+        <a class="nav-item" data-view="certificate">
+          <i class="fa-solid fa-award"></i>
+          <span>My Certificate</span>
+        </a>
+
+        <div class="nav-section-label">Account</div>
+        <a class="nav-item" data-view="profile">
+          <i class="fa-solid fa-user-gear"></i>
+          <span>Profile Settings</span>
+        </a>
+        <a class="nav-item" id="btn-nav-logout" onclick="handleLogout()">
+          <i class="fa-solid fa-right-from-bracket"></i>
+          <span>Logout</span>
+        </a>
+      </nav>
+
+      <div class="sidebar-footer">
+        <div class="user-mini-profile">
+          <div class="avatar-circle" id="sidebar-user-avatar">JD</div>
+          <div class="user-mini-info">
+            <div class="user-mini-name" id="sidebar-user-name">Alex Johnson</div>
+            <div class="user-mini-role" id="sidebar-user-role">Student Learner</div>
+          </div>
+        </div>
+      </div>
+    </aside>
+
+    <!-- Main Content Area -->
+    <main class="main-content">
+      
+      <!-- Top Sticky Header -->
+      <header class="top-header">
+        <div class="header-left">
+          <button class="mobile-menu-toggle" id="mobile-toggle-btn">
+            <i class="fa-solid fa-bars"></i>
+          </button>
+          <h1 class="page-title" id="current-page-title">Dashboard Overview</h1>
+        </div>
+
+        <div class="header-right">
+          <div class="search-box">
+            <i class="fa-solid fa-magnifying-glass"></i>
+            <input type="text" placeholder="Search topics, skills..." id="global-search-input">
+          </div>
+
+          <div class="streak-badge" title="Learning Streak">
+            <i class="fa-solid fa-fire text-amber-500"></i>
+            <span id="header-streak-days">5 Day Streak</span>
+          </div>
+        </div>
+      </header>
+
+      <!-- Dynamic Page Content Views Body -->
+      <div class="content-body">
+
+        <!-- VIEW 1: AUTHENTICATION (LOGIN / REGISTER) -->
+        <section id="view-auth" class="page-view">
+          <div class="auth-wrapper glass-card">
+            <div class="auth-hero">
+              <div>
+                <div class="brand-icon mb-4" style="width:50px; height:50px; font-size:24px;">
+                  <i class="fa-solid fa-graduation-cap"></i>
+                </div>
+                <h2 class="auth-hero-title">Enhance Your Tech Skills & Elevate Your Career</h2>
+                <p>Personalized learning paths, AI-assisted proctored assessments, and verified certificates designed to accelerate your growth.</p>
+              </div>
+              <div style="font-size:0.85rem; opacity:0.8;">
+                <i class="fa-solid fa-circle-check"></i> 100% Client-Side LocalStorage Persistence
+              </div>
+            </div>
+
+            <div class="auth-form-container">
+              <div class="auth-tabs">
+                <div class="auth-tab active" id="tab-login" onclick="switchAuthTab('login')">Sign In</div>
+                <div class="auth-tab" id="tab-register" onclick="switchAuthTab('register')">Register</div>
+              </div>
+
+              <!-- Login Form -->
+              <form id="form-login" onsubmit="handleLoginSubmit(event)">
+                <div class="form-group">
+                  <label>Email Address</label>
+                  <input type="email" id="login-email" class="form-control" value="student@skillpath.edu" required>
+                </div>
+                <div class="form-group">
+                  <label>Password</label>
+                  <input type="password" id="login-password" class="form-control" value="password123" required>
+                </div>
+                <button type="submit" class="btn btn-primary btn-block btn-lg mt-4">
+                  <i class="fa-solid fa-arrow-right-to-bracket"></i> Sign In to Dashboard
+                </button>
+                <div style="text-align:center; margin-top:14px; font-size:0.85rem; color:var(--text-muted);">
+                  Quick Demo Login pre-filled for convenience!
+                </div>
+              </form>
+
+              <!-- Register Form -->
+              <form id="form-register" style="display:none;" onsubmit="handleRegisterSubmit(event)">
+                <div class="form-group">
+                  <label>Full Name</label>
+                  <input type="text" id="reg-name" class="form-control" placeholder="e.g. Alex Johnson" required>
+                </div>
+                <div class="form-group">
+                  <label>Email Address</label>
+                  <input type="email" id="reg-email" class="form-control" placeholder="name@example.com" required>
+                </div>
+                <div class="form-group">
+                  <label>Target Role / Field</label>
+                  <input type="text" id="reg-role" class="form-control" placeholder="e.g. Full Stack Developer" required>
+                </div>
+                <button type="submit" class="btn btn-primary btn-block btn-lg mt-4">
+                  <i class="fa-solid fa-user-plus"></i> Create Account
+                </button>
+              </form>
+            </div>
+          </div>
+        </section>
+
+        <!-- VIEW 2: DASHBOARD OVERVIEW -->
+        <section id="view-dashboard" class="page-view active">
+          
+          <!-- Welcome Banner -->
+          <div class="welcome-banner">
+            <div class="welcome-text">
+              <h2>Welcome Back, <span id="dash-user-name">Alex Johnson</span>! 👋</h2>
+              <p>You have made fantastic progress this week! Take your diagnostic quiz or jump back into your personalized learning roadmap.</p>
+              <div class="mt-4" style="display:flex; gap:12px;">
+                <button class="btn btn-primary" onclick="navigateTo('skills')">
+                  <i class="fa-solid fa-play"></i> Start Skill Quiz
+                </button>
+                <button class="btn btn-secondary" id="dash-btn-continue" onclick="navigateTo('path')">
+                  <i class="fa-solid fa-forward"></i> Continue Learning
+                </button>
+              </div>
+            </div>
+            <div class="welcome-illustration" style="display:none; @media(min-width:768px){display:block;}">
+              <i class="fa-solid fa-rocket" style="font-size: 5rem; opacity: 0.85;"></i>
+            </div>
+          </div>
+
+          <!-- Quick Stats Cards -->
+          <div class="quick-stats-grid">
+            <div class="glass-card stat-card">
+              <div class="stat-icon blue">
+                <i class="fa-solid fa-chart-line"></i>
+              </div>
+              <div>
+                <div class="stat-value" id="dash-overall-progress-text">45%</div>
+                <div class="stat-label">Overall Path Completion</div>
+                <div class="progress-bar-container">
+                  <div class="progress-bar-fill" id="dash-overall-progress-fill" style="width: 45%;"></div>
+                </div>
+              </div>
+            </div>
+
+            <div class="glass-card stat-card">
+              <div class="stat-icon green">
+                <i class="fa-solid fa-check-double"></i>
+              </div>
+              <div>
+                <div class="stat-value" id="dash-topics-completed-text">6 / 12</div>
+                <div class="stat-label">Topics Mastered</div>
+              </div>
+            </div>
+
+            <div class="glass-card stat-card">
+              <div class="stat-icon purple">
+                <i class="fa-solid fa-certificate"></i>
+              </div>
+              <div>
+                <div class="stat-value" id="dash-certs-earned-text">1 Unlocked</div>
+                <div class="stat-label">Verified Certifications</div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Dashboard Main Grid -->
+          <div class="dashboard-grid">
+            <div class="glass-card">
+              <div class="card-title">
+                <span><i class="fa-solid fa-bullseye text-blue-600"></i> Active Skills & Roadmaps</span>
+                <button class="btn btn-outline" style="padding:4px 10px; font-size:0.8rem;" onclick="navigateTo('skills')">View All</button>
+              </div>
+              <div id="dash-active-skills-list">
+                <!-- Dynamically populated skill status cards -->
+              </div>
+            </div>
+
+            <div>
+              <!-- Recent Activity -->
+              <div class="glass-card mb-4">
+                <div class="card-title">
+                  <span><i class="fa-solid fa-clock-rotate-left"></i> Recent Activity</span>
+                </div>
+                <ul class="recent-activity-list" id="dash-activity-list">
+                  <li class="activity-item">
+                    <div class="activity-icon"><i class="fa-solid fa-vial"></i></div>
+                    <div class="activity-details">
+                      <div class="activity-title">Diagnostic Quiz: Web Dev</div>
+                      <div class="activity-time">Score: 80% • 2 hours ago</div>
+                    </div>
+                  </li>
+                  <li class="activity-item">
+                    <div class="activity-icon"><i class="fa-solid fa-check"></i></div>
+                    <div class="activity-details">
+                      <div class="activity-title">Completed: Glassmorphism UI</div>
+                      <div class="activity-time">Roadmap Topic • Yesterday</div>
+                    </div>
+                  </li>
+                </ul>
+              </div>
+
+              <!-- Quick Action Cards -->
+              <div class="glass-card">
+                <div class="card-title">
+                  <span><i class="fa-solid fa-bolt"></i> Quick Actions</span>
+                </div>
+                <div class="quick-actions-grid">
+                  <div class="action-card" onclick="navigateTo('skills')">
+                    <i class="fa-solid fa-vial-circle-check"></i>
+                    <span>Take Quiz</span>
+                  </div>
+                  <div class="action-card" onclick="navigateTo('path')">
+                    <i class="fa-solid fa-map-location-dot"></i>
+                    <span>View Path</span>
+                  </div>
+                  <div class="action-card" onclick="navigateTo('practice')">
+                    <i class="fa-solid fa-code"></i>
+                    <span>Practice</span>
+                  </div>
+                  <div class="action-card" onclick="navigateTo('exam')">
+                    <i class="fa-solid fa-camera"></i>
+                    <span>Final Exam</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- VIEW 3: SKILLS CATALOG -->
+        <section id="view-skills" class="page-view">
+          <div style="margin-bottom: 24px;">
+            <p class="text-muted">Select a skill to take a diagnostic assessment quiz, identify weak topics, and generate your customized learning path.</p>
+          </div>
+          <div class="skills-grid" id="skills-catalog-grid">
+            <!-- Dynamically populated skill cards -->
+          </div>
+        </section>
+
+        <!-- VIEW 4: DIAGNOSTIC QUIZ ENGINE -->
+        <section id="view-quiz" class="page-view">
+          <div class="quiz-container glass-card">
+            <div class="quiz-header">
+              <div>
+                <h3 id="quiz-skill-title" style="font-family:var(--font-heading); font-size:1.4rem;">Diagnostic Assessment</h3>
+                <div class="text-muted" id="quiz-question-counter" style="font-size:0.88rem;">Question 1 of 5</div>
+              </div>
+              <div class="quiz-timer">
+                <i class="fa-solid fa-stopwatch"></i>
+                <span id="quiz-timer-clock">05:00</span>
+              </div>
+            </div>
+
+            <!-- Quiz Question Card -->
+            <div class="question-card">
+              <div class="question-text" id="quiz-question-text">
+                Loading assessment question...
+              </div>
+
+              <div class="options-list" id="quiz-options-container">
+                <!-- Option items inserted dynamically -->
+              </div>
+            </div>
+
+            <!-- Quiz Controls -->
+            <div class="quiz-footer-actions">
+              <button class="btn btn-outline" id="quiz-btn-prev" onclick="navigateQuizQuestion(-1)">
+                <i class="fa-solid fa-arrow-left"></i> Previous
+              </button>
+              
+              <div style="display:flex; gap:10px;">
+                <button class="btn btn-outline" onclick="clearQuizSelection()">Clear Answer</button>
+                <button class="btn btn-primary" id="quiz-btn-next" onclick="navigateQuizQuestion(1)">
+                  Next Question <i class="fa-solid fa-arrow-right"></i>
+                </button>
+                <button class="btn btn-success" id="quiz-btn-submit" style="display:none;" onclick="submitQuizAssessment()">
+                  <i class="fa-solid fa-check-double"></i> Submit Quiz
+                </button>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- VIEW 5: WEAK AREA ANALYSIS -->
+        <section id="view-analysis" class="page-view">
+          <div class="results-summary-box glass-card">
+            <div class="score-circle">
+              <div id="analysis-score-percent">80%</div>
+              <span>Quiz Score</span>
+            </div>
+            <h2 style="font-family:var(--font-heading);" id="analysis-skill-heading">Web Development Diagnostic</h2>
+            <p id="analysis-summary-text" style="max-width:550px; margin:8px auto 0; opacity:0.9;">
+              Great effort! We analyzed your answers to pinpoint areas for targeted improvement.
+            </p>
+          </div>
+
+          <div class="topics-analysis-grid">
+            <!-- Weak Topics Card -->
+            <div class="glass-card">
+              <div class="card-title">
+                <span><i class="fa-solid fa-triangle-exclamation text-amber-500"></i> Weak Areas (Needs Focus)</span>
+              </div>
+              <ul class="topic-list" id="analysis-weak-topics-list">
+                <!-- Populated dynamically -->
+              </ul>
+            </div>
+
+            <!-- Strong Topics Card -->
+            <div class="glass-card">
+              <div class="card-title">
+                <span><i class="fa-solid fa-circle-check text-green-500"></i> Mastered Topics</span>
+              </div>
+              <ul class="topic-list" id="analysis-strong-topics-list">
+                <!-- Populated dynamically -->
+              </ul>
+            </div>
+          </div>
+
+          <!-- Recommendation & Path Generator -->
+          <div class="glass-card" style="text-align:center; padding:32px;">
+            <i class="fa-solid fa-wand-magic-sparkles" style="font-size:2.5rem; color:var(--primary); margin-bottom:12px;"></i>
+            <h3 style="font-family:var(--font-heading); font-size:1.3rem; margin-bottom:8px;">Ready to Bridge Your Skill Gaps?</h3>
+            <p class="text-muted" style="max-width:600px; margin:0 auto 20px;">
+              Our AI engine has structured a 3-tier roadmap specifically prioritizing your weak topics for fast-track skill acquisition.
+            </p>
+            <button class="btn btn-primary btn-lg" onclick="generatePersonalizedPath()">
+              <i class="fa-solid fa-route"></i> Generate Personalized Learning Path
+            </button>
+          </div>
+        </section>
+
+        <!-- VIEW 6: PERSONALIZED LEARNING PATH ROADMAP -->
+        <section id="view-path" class="page-view">
+          <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:24px;">
+            <div>
+              <h2 style="font-family:var(--font-heading);" id="path-selected-skill-name">Web Development Roadmap</h2>
+              <p class="text-muted">Structured step-by-step learning modules based on your quiz analysis.</p>
+            </div>
+            <button class="btn btn-outline" onclick="navigateTo('skills')">Switch Skill</button>
+          </div>
+
+          <div class="roadmap-container" id="roadmap-phases-container">
+            <!-- Beginner, Intermediate, Advanced phase cards inserted dynamically -->
+          </div>
+        </section>
+
+        <!-- VIEW 7: PRACTICE PLAYGROUND -->
+        <section id="view-practice" class="page-view">
+          <div class="practice-container">
+            <!-- Exercise Instructions -->
+            <div class="glass-card">
+              <div class="card-title">
+                <span><i class="fa-solid fa-laptop-code text-blue-600"></i> Coding Task & Exercise</span>
+                <span class="difficulty-badge badge-intermediate" id="practice-skill-badge">Web Dev</span>
+              </div>
+              <h3 style="font-family:var(--font-heading); margin-bottom:12px;" id="practice-task-title">Glassmorphism Card Challenge</h3>
+              <p class="text-muted" style="margin-bottom:16px;" id="practice-task-instructions">
+                Loading task instructions...
+              </p>
+              
+              <div style="background:var(--primary-subtle); border-left:4px solid var(--primary); padding:14px; border-radius:8px; margin-bottom:20px;">
+                <strong><i class="fa-solid fa-lightbulb"></i> Helpful Hint:</strong>
+                <p style="font-size:0.88rem; margin-top:4px;" id="practice-task-hint">
+                  Use array iterations or loops to construct the required output structure.
+                </p>
+              </div>
+
+              <div style="display:flex; gap:12px;">
+                <button class="btn btn-success btn-block" onclick="completePracticeTask()">
+                  <i class="fa-solid fa-circle-check"></i> Mark Task as Completed
+                </button>
+              </div>
+            </div>
+
+            <!-- Code Editor Simulator -->
+            <div class="glass-card">
+              <div class="card-title">
+                <span><i class="fa-solid fa-terminal"></i> Interactive Sandbox</span>
+              </div>
+              <div class="code-editor-sim">
+                <div class="code-editor-header">
+                  <div class="dot dot-red"></div>
+                  <div class="dot dot-yellow"></div>
+                  <div class="dot dot-green"></div>
+                  <span style="font-size:0.75rem; color:#94a3b8; margin-left:8px;">solution.js</span>
+                </div>
+                <textarea class="code-textarea" id="practice-code-input" spellcheck="false">// Code solution sandbox...</textarea>
+              </div>
+              <div style="margin-top:14px; display:flex; justify-content:space-between; align-items:center;">
+                <button class="btn btn-secondary" onclick="runPracticeCodeSim()">
+                  <i class="fa-solid fa-play"></i> Test Solution
+                </button>
+                <span id="practice-sim-output" style="font-size:0.85rem; font-weight:600; color:var(--success);"></span>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- VIEW 8: PROGRESS TRACKING & ANALYTICS -->
+        <section id="view-progress" class="page-view">
+          <div class="dashboard-grid">
+            <div class="glass-card" style="text-align:center;">
+              <div class="card-title">
+                <span><i class="fa-solid fa-chart-donut"></i> Overall Skill Completion</span>
+              </div>
+              <div style="max-width:280px; margin:20px auto;">
+                <canvas id="progressDoughnutChart"></canvas>
+              </div>
+              <div style="font-family:var(--font-heading); font-size:1.8rem; font-weight:800; color:var(--primary);" id="progress-doughnut-percent">
+                45% Completed
+              </div>
+            </div>
+
+            <div style="display:flex; flex-direction:column; gap:20px;">
+              <div class="glass-card stat-card">
+                <div class="stat-icon blue"><i class="fa-solid fa-fire"></i></div>
+                <div>
+                  <div class="stat-value" id="progress-streak-val">5 Days</div>
+                  <div class="stat-label">Active Streak</div>
+                </div>
+              </div>
+              <div class="glass-card stat-card">
+                <div class="stat-icon green"><i class="fa-solid fa-book-bookmark"></i></div>
+                <div>
+                  <div class="stat-value" id="progress-completed-topics-val">6 Completed</div>
+                  <div class="stat-label">Remaining: 6 Topics</div>
+                </div>
+              </div>
+              <div class="glass-card stat-card">
+                <div class="stat-icon purple"><i class="fa-solid fa-award"></i></div>
+                <div>
+                  <div class="stat-value" id="progress-certs-val">1 Earned</div>
+                  <div class="stat-label">Final Certification</div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- VIEW 9: REASSESSMENT QUIZ -->
+        <section id="view-reassessment" class="page-view">
+          <div class="glass-card" style="max-width:800px; margin:0 auto; text-align:center; padding:36px;">
+            <i class="fa-solid fa-arrow-rotate-right" style="font-size:3rem; color:var(--primary); margin-bottom:16px;"></i>
+            <h2 style="font-family:var(--font-heading);">Skill Reassessment Engine</h2>
+            <p class="text-muted" style="max-width:550px; margin:8px auto 24px;">
+              Finished studying your learning path? Retake the diagnostic assessment quiz to evaluate your score growth and verify weak area mastery!
+            </p>
+
+            <div style="display:grid; grid-template-columns:1fr 1fr; gap:20px; max-width:500px; margin:0 auto 28px;">
+              <div style="background:var(--primary-subtle); padding:16px; border-radius:12px; border:1px solid var(--primary-light);">
+                <div style="font-size:0.85rem; color:var(--text-muted);">Initial Diagnostic</div>
+                <div style="font-family:var(--font-heading); font-size:1.6rem; font-weight:800; color:var(--text-dark);" id="reassess-prev-score">60%</div>
+              </div>
+              <div style="background:#dcfce7; padding:16px; border-radius:12px; border:1px solid #bbf7d0;">
+                <div style="font-size:0.85rem; color:#15803d;">Latest Reassessment</div>
+                <div style="font-family:var(--font-heading); font-size:1.6rem; font-weight:800; color:#15803d;" id="reassess-current-score">85%</div>
+              </div>
+            </div>
+
+            <button class="btn btn-primary btn-lg" onclick="startReassessmentQuiz()">
+              <i class="fa-solid fa-play"></i> Retake Skill Quiz Now
+            </button>
+          </div>
+        </section>
+
+        <!-- VIEW 10: FINAL ASSESSMENT (AI PROCTORING) -->
+        <section id="view-exam" class="page-view">
+          <div class="quiz-container glass-card">
+            <div class="quiz-header">
+              <div>
+                <h3 style="font-family:var(--font-heading); font-size:1.4rem;">AI-Proctored Final Certification Exam</h3>
+                <div class="text-muted" id="exam-question-counter">Question 1 of 5</div>
+              </div>
+              <div class="quiz-timer" style="background:#fee2e2; color:#b91c1c;">
+                <i class="fa-solid fa-stopwatch"></i>
+                <span id="exam-timer-clock">10:00</span>
+              </div>
+            </div>
+
+            <!-- Camera Gatekeeper Prompt -->
+            <div id="exam-cam-permission-box" style="text-align:center; padding:40px 20px;">
+              <i class="fa-solid fa-camera-retro" style="font-size:3.5rem; color:var(--primary); margin-bottom:16px;"></i>
+              <h2 style="font-family:var(--font-heading); margin-bottom:12px;">Webcam Proctoring Required</h2>
+              <p class="text-muted" style="max-width:520px; margin:0 auto 24px;">
+                To guarantee assessment integrity, camera access is required to take the final assessment. Your video stream remains local and is monitored by our on-device proctoring guard.
+              </p>
+              <div id="exam-cam-error-msg" style="display:none; color:var(--danger); font-weight:600; margin-bottom:16px;">
+                <i class="fa-solid fa-circle-exclamation"></i> Camera access is required to take the final assessment.
+              </div>
+              <button class="btn btn-primary btn-lg" onclick="initiateProctoredExam()">
+                <i class="fa-solid fa-video"></i> Grant Camera Access & Start Exam
+              </button>
+            </div>
+
+            <!-- Active Exam Questions Box -->
+            <div id="exam-active-box" style="display:none;">
+              <div class="question-card">
+                <div class="question-text" id="exam-question-text">
+                  Exam Question...
+                </div>
+                <div class="options-list" id="exam-options-container">
+                  <!-- Options -->
+                </div>
+              </div>
+
+              <div class="quiz-footer-actions">
+                <button class="btn btn-outline" id="exam-btn-prev" onclick="navigateExamQuestion(-1)">
+                  <i class="fa-solid fa-arrow-left"></i> Previous
+                </button>
+                
+                <div style="display:flex; gap:10px;">
+                  <button class="btn btn-primary" id="exam-btn-next" onclick="navigateExamQuestion(1)">
+                    Next Question <i class="fa-solid fa-arrow-right"></i>
+                  </button>
+                  <button class="btn btn-success" id="exam-btn-submit" style="display:none;" onclick="submitFinalExam()">
+                    <i class="fa-solid fa-shield-check"></i> Submit Final Exam
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- VIEW 11: CERTIFICATE OF COMPLETION -->
+        <section id="view-certificate" class="page-view">
+          <!-- Pass Banner -->
+          <div id="cert-pass-banner" style="display:none; margin-bottom:24px;" class="glass-card">
+            <div style="display:flex; justify-content:space-between; align-items:center;">
+              <div>
+                <h3 style="font-family:var(--font-heading); color:var(--success);"><i class="fa-solid fa-circle-check"></i> Congratulations! You Passed!</h3>
+                <p class="text-muted">You scored <strong id="cert-score-display">90%</strong> on the final assessment and unlocked your official certificate.</p>
+              </div>
+              <button class="btn btn-success btn-lg" onclick="downloadCertificatePDF()">
+                <i class="fa-solid fa-file-arrow-down"></i> Download Certificate (PDF)
+              </button>
+            </div>
+          </div>
+
+          <!-- Fail Banner -->
+          <div id="cert-fail-banner" style="display:none; margin-bottom:24px;" class="glass-card">
+            <div style="text-align:center; padding:24px;">
+              <i class="fa-solid fa-circle-xmark" style="font-size:3rem; color:var(--danger); margin-bottom:12px;"></i>
+              <h3 style="font-family:var(--font-heading); color:var(--danger); margin-bottom:8px;">Passing Score Not Met</h3>
+              <p class="text-muted" style="max-width:550px; margin:0 auto 20px;">
+                You did not meet the passing score (70%). Please review the learning materials and retake the assessment.
+              </p>
+              <button class="btn btn-primary" onclick="navigateTo('exam')">
+                <i class="fa-solid fa-rotate-left"></i> Retake Final Assessment
+              </button>
+            </div>
+          </div>
+
+          <!-- Printable / Downloadable Certificate Template Card -->
+          <div class="certificate-wrapper" id="certificate-node">
+            <div class="certificate-inner-border">
+              <div class="certificate-badge-seal">
+                <i class="fa-solid fa-award"></i>
+              </div>
+              <h2 class="certificate-title">Certificate of Completion</h2>
+              <div class="certificate-subtitle">SkillPath AI Academy • Verified Achievement</div>
+              
+              <p style="font-size:0.95rem; color:#64748b; margin-bottom:12px;">This is proudly presented to</p>
+              <div class="certificate-recipient" id="cert-user-fullname">Alex Johnson</div>
+              
+              <p class="certificate-text">
+                for successfully demonstrating mastery and passing the AI-proctored examination in
+                <br>
+                <strong id="cert-skill-title" style="font-size:1.3rem; color:var(--primary);">Web Development & Modern Engineering</strong>
+                <br>
+                with a final assessment score of <strong id="cert-final-percentage">90%</strong>.
+              </p>
+
+              <div class="certificate-footer-grid">
+                <div style="text-align:left;">
+                  <div class="signature-line">SkillPath AI Director</div>
+                  <div class="signature-title">Board of Certification</div>
+                </div>
+
+                <div class="cert-id-tag">
+                  Issued: <span id="cert-issue-date">2026-07-22</span>
+                  <br>
+                  Certificate ID: <span id="cert-id-code">CERT-2026-8942</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- VIEW 12: USER PROFILE SETTINGS -->
+        <section id="view-profile" class="page-view">
+          <div class="glass-card" style="max-width:650px; margin:0 auto;">
+            <div class="card-title">
+              <span><i class="fa-solid fa-id-card text-blue-600"></i> Student Profile Settings</span>
+            </div>
+
+            <form onsubmit="saveUserProfile(event)">
+              <div class="form-group">
+                <label>Full Name</label>
+                <input type="text" id="prof-name-input" class="form-control" value="Alex Johnson" required>
+              </div>
+
+              <div class="form-group">
+                <label>Target Engineering Role</label>
+                <input type="text" id="prof-role-input" class="form-control" value="Full Stack Developer" required>
+              </div>
+
+              <div class="form-group">
+                <label>Email Address</label>
+                <input type="email" id="prof-email-input" class="form-control" value="student@skillpath.edu" required>
+              </div>
+
+              <button type="submit" class="btn btn-primary btn-block">
+                <i class="fa-solid fa-floppy-disk"></i> Save Profile Changes
+              </button>
+            </form>
+
+            <hr style="margin:28px 0; border:none; border-top:1px solid var(--border-color);">
+
+            <div style="display:flex; justify-content:space-between; align-items:center;">
+              <div>
+                <strong style="color:var(--danger);"><i class="fa-solid fa-trash-can"></i> Reset Learning Progress</strong>
+                <p class="text-muted" style="font-size:0.82rem;">Clears stored localquiz results and learning path checkmarks.</p>
+              </div>
+              <button class="btn btn-outline" style="color:var(--danger); border-color:var(--danger);" onclick="resetAllProgressData()">
+                Reset Data
+              </button>
+            </div>
+          </div>
+        </section>
+
+      </div>
+    </main>
+  </div>
+
+  <!-- FLOATING PROCTORING WEBCAM WINDOW (Active during Final Exam) -->
+  <div class="proctor-cam-window" id="proctor-cam-window">
+    <video id="proctor-webcam" autoplay playsinline muted></video>
+    <div class="proctor-overlay-badge">
+      <span><div class="proctor-live-dot"></div> AI PROCTOR</span>
+      <span style="opacity:0.8;">MONITORING</span>
+    </div>
+  </div>
+
+  <!-- Javascript Modules -->
+  <script src="js/data.js"></script>
+  <script src="js/app.js"></script>
+</body>
+</html>

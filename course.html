@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Course Content & Lessons - SkillPath AI</title>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+  <div class="bg-blob blob-1"></div>
+  <div class="bg-blob blob-2"></div>
+
+  <div id="app-layout">
+    <!-- Sidebar Navigation -->
+    <aside class="sidebar">
+      <div class="sidebar-header">
+        <div class="brand-icon"><i class="fa-solid fa-graduation-cap"></i></div>
+        <div class="brand-title">Skill<span>Path</span> AI</div>
+      </div>
+      <nav class="sidebar-nav">
+        <div class="nav-section-label">Main Menu</div>
+        <a href="dashboard.html" class="nav-item"><i class="fa-solid fa-chart-pie"></i><span>Dashboard</span></a>
+        <a href="skills.html" class="nav-item"><i class="fa-solid fa-lightbulb"></i><span>Skills Catalog</span></a>
+        <a href="learningpath.html" class="nav-item active"><i class="fa-solid fa-route"></i><span>Learning Path</span></a>
+        <a href="progress.html" class="nav-item"><i class="fa-solid fa-bars-progress"></i><span>Progress Tracking</span></a>
+        <div class="nav-section-label">Assessments & Certs</div>
+        <a href="quiz.html?type=exam" class="nav-item"><i class="fa-solid fa-shield-halved"></i><span>Final Exam (AI)</span></a>
+        <a href="certificate.html" class="nav-item"><i class="fa-solid fa-award"></i><span>My Certificate</span></a>
+      </nav>
+      <div class="sidebar-footer">
+        <div class="user-mini-profile">
+          <div class="avatar-circle" id="user-avatar-initials">GL</div>
+          <div style="flex:1; overflow:hidden;">
+            <div id="user-display-name" style="font-weight:600; font-size:0.9rem; color:#fff;">Guest Learner</div>
+            <div id="user-display-role" style="font-size:0.75rem; color:#94a3b8;">Student Learner</div>
+          </div>
+        </div>
+      </div>
+    </aside>
+
+    <!-- Main Content -->
+    <main class="main-content">
+      <header class="top-header">
+        <div>
+          <h1 class="page-title" id="course-page-title">Course Learning Center</h1>
+          <div style="font-size:0.88rem; color:var(--text-muted);" id="course-skill-breadcrumb">Mastery Track • Interactive Lessons</div>
+        </div>
+        <div style="display:flex; align-items:center; gap:16px;">
+          <div class="streak-badge" id="header-streak-days"><i class="fa-solid fa-fire text-amber-500"></i> 1 Day Streak</div>
+          <button class="btn btn-sm btn-outline" onclick="handleLogout()"><i class="fa-solid fa-arrow-right-from-bracket"></i> Logout</button>
+        </div>
+      </header>
+
+      <div class="content-body">
+        <!-- Top Course Header Card -->
+        <div class="glass-card" style="padding:24px; margin-bottom:24px; background:var(--bg-card);">
+          <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:16px;">
+            <div>
+              <span class="difficulty-badge badge-intermediate" id="course-badge">Target Focus Course</span>
+              <h2 style="font-family:var(--font-heading); font-size:1.6rem; font-weight:800; margin-top:8px;" id="course-main-title">
+                Loading Recommended Course...
+              </h2>
+              <p style="color:var(--text-muted); font-size:0.9rem; margin-top:4px;" id="course-desc">
+                Complete all course modules and subtopics to unlock your Final Certification Exam.
+              </p>
+            </div>
+            <div style="text-align:right; min-width:220px;">
+              <div style="font-size:0.85rem; color:var(--text-muted); margin-bottom:4px;">Subtopics Completion Progress</div>
+              <div style="font-weight:800; font-size:1.4rem; color:var(--primary);" id="course-progress-text">0%</div>
+              <div class="progress-bar-container" style="height:10px; width:220px; margin-top:4px;">
+                <div class="progress-bar-fill" id="course-progress-bar" style="width:0%;"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Lessons & Content Layout -->
+        <div style="display:grid; grid-template-columns: 320px 1fr; gap:24px;" class="course-split-grid">
+          
+          <!-- Topic-wise Lessons List Sidebar -->
+          <div class="glass-card" style="padding:20px; height:fit-content;">
+            <h3 style="font-family:var(--font-heading); font-size:1.1rem; margin-bottom:16px; display:flex; align-items:center; gap:8px;">
+              <i class="fa-solid fa-list-check" style="color:var(--primary);"></i>
+              Topic-Wise Lessons
+            </h3>
+            <div id="course-lessons-list" style="display:flex; flex-direction:column; gap:10px;">
+              <!-- Lessons rendered dynamically -->
+            </div>
+          </div>
+
+          <!-- Active Lesson View Container -->
+          <div class="glass-card" style="padding:28px;">
+            <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:20px; padding-bottom:16px; border-bottom:1px solid var(--border-color);">
+              <div>
+                <span style="font-size:0.8rem; text-transform:uppercase; letter-spacing:1px; color:var(--primary); font-weight:700;" id="lesson-number-tag">Lesson 1 of 4</span>
+                <h2 style="font-family:var(--font-heading); font-size:1.5rem; font-weight:700; margin-top:4px;" id="lesson-title">Lesson Overview</h2>
+              </div>
+              <button class="btn btn-sm btn-outline" id="btn-mark-completed" onclick="toggleCurrentLessonCompletion()">
+                <i class="fa-regular fa-circle-check"></i> Mark Lesson Completed
+              </button>
+            </div>
+
+            <!-- Embedded Video / Media Player Container -->
+            <div style="margin-bottom:24px; border-radius:14px; overflow:hidden; background:#0f172a; border:1px solid #1e293b;">
+              <!-- Player Header & Switcher Tabs -->
+              <div style="padding:10px 16px; background:#1e293b; display:flex; justify-content:space-between; align-items:center; border-bottom:1px solid #334155;">
+                <div style="display:flex; gap:8px;">
+                  <button id="btn-tab-html5" class="btn btn-sm btn-primary" onclick="switchVideoPlayerMode('html5')" style="padding:4px 12px; font-size:0.8rem;">
+                    <i class="fa-solid fa-circle-play"></i> HTML5 Video Player
+                  </button>
+                  <button id="btn-tab-youtube" class="btn btn-sm btn-outline" onclick="switchVideoPlayerMode('youtube')" style="padding:4px 12px; font-size:0.8rem; color:#cbd5e1; border-color:#475569;">
+                    <i class="fa-brands fa-youtube"></i> YouTube Embed
+                  </button>
+                </div>
+                <span id="video-duration" style="color:#94a3b8; font-size:0.8rem;"><i class="fa-solid fa-clock"></i> 20 mins</span>
+              </div>
+
+              <!-- HTML5 Video Player Container -->
+              <div id="video-html5-container" style="padding:12px; background:#000; text-align:center;">
+                <video id="lesson-video-player" controls preload="metadata" style="width:100%; max-height:440px; border-radius:8px; outline:none; background:#000;">
+                  <source id="lesson-video-mp4-src" src="" type="video/mp4">
+                  Your browser does not support native HTML5 video playback.
+                </video>
+              </div>
+
+              <!-- YouTube Iframe Player Container -->
+              <div id="video-youtube-container" style="position:relative; padding-bottom:52%; height:0; overflow:hidden; display:none; background:#0f172a;">
+                <iframe id="lesson-video-iframe" style="position:absolute; top:0; left:0; width:100%; height:100%; border:0;" src="" title="Lesson Video Tutorial" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen onerror="document.getElementById('video-fallback-msg').style.display='block';"></iframe>
+                <div id="video-fallback-msg" style="display:none; position:absolute; inset:0; background:#0f172a; color:#cbd5e1; padding:30px; text-align:center;">
+                  <i class="fa-solid fa-triangle-exclamation" style="font-size:2rem; color:var(--amber); margin-bottom:10px;"></i>
+                  <p>If the YouTube video cannot be loaded directly, click "Open YouTube" or switch to the HTML5 Video Player tab above.</p>
+                </div>
+              </div>
+
+              <!-- Player Footer Bar -->
+              <div style="padding:12px 16px; background:#1e293b; color:#94a3b8; font-size:0.85rem; display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:10px;">
+                <span><i class="fa-solid fa-circle-play text-blue-400"></i> <strong id="video-title" style="color:#f8fafc;">Video Lecture & Explanation</strong></span>
+                <div style="display:flex; align-items:center; gap:12px;">
+                  <button onclick="openVideoModal()" class="btn btn-sm btn-primary" style="padding:4px 10px; font-size:0.78rem;">
+                    <i class="fa-solid fa-expand"></i> Fullscreen Modal Player
+                  </button>
+                  <a id="btn-open-video-tab" href="#" target="_blank" rel="noopener noreferrer" style="color:#60a5fa; text-decoration:none; font-weight:600; font-size:0.8rem;">
+                    <i class="fa-solid fa-up-right-from-square"></i> Open YouTube
+                  </a>
+                </div>
+              </div>
+            </div>
+
+            <!-- Interactive Subtopics Checklist Section -->
+            <div style="margin-bottom:28px; padding:20px; background:var(--bg-card-solid); border:1px solid var(--border-color); border-radius:12px;">
+              <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:14px;">
+                <h3 style="font-family:var(--font-heading); font-size:1.15rem; font-weight:700; color:var(--text-dark); display:flex; align-items:center; gap:8px; margin:0;">
+                  <i class="fa-solid fa-list-check" style="color:var(--primary);"></i>
+                  Subtopics Checklist (Required for Final Exam)
+                </h3>
+                <span id="lesson-subtopics-progress" style="font-size:0.85rem; font-weight:700; color:var(--primary);">0 of 3 Finished</span>
+              </div>
+              <p style="font-size:0.85rem; color:var(--text-muted); margin-bottom:14px;">
+                Check off all subtopics as you complete them. You must finish 100% of all course subtopics to unlock the Final Exam.
+              </p>
+              <div id="lesson-subtopics-list" style="display:flex; flex-direction:column; gap:10px;">
+                <!-- Subtopics rendered dynamically with checkboxes -->
+              </div>
+            </div>
+
+            <!-- Notes Section -->
+            <div style="margin-bottom:28px;">
+              <h3 style="font-family:var(--font-heading); font-size:1.2rem; font-weight:700; margin-bottom:12px; display:flex; align-items:center; gap:8px;">
+                <i class="fa-solid fa-book-open" style="color:var(--primary);"></i>
+                Lesson Notes & Core Mechanics
+              </h3>
+              <div id="lesson-notes-content" style="color:var(--text-dark); line-height:1.7; font-size:0.95rem;">
+                <!-- Rendered dynamically -->
+              </div>
+            </div>
+
+            <!-- Learning Resources Section -->
+            <div style="margin-bottom:28px; padding:18px; background:var(--primary-subtle); border:1px solid var(--primary-light); border-radius:12px;">
+              <h4 style="font-family:var(--font-heading); font-size:1rem; color:var(--primary); margin-bottom:10px; display:flex; align-items:center; gap:8px;">
+                <i class="fa-solid fa-paperclip"></i> Learning Resources & Reference Guides
+              </h4>
+              <div id="lesson-resources-list" style="display:flex; flex-direction:column; gap:8px;">
+                <!-- Links rendered dynamically -->
+              </div>
+            </div>
+
+            <!-- Next/Previous Navigation Bar -->
+            <div style="display:flex; justify-content:space-between; align-items:center; padding-top:20px; border-top:1px solid var(--border-color);">
+              <button class="btn btn-outline" id="btn-prev-lesson" onclick="navigateLesson(-1)">
+                <i class="fa-solid fa-arrow-left"></i> Previous Lesson
+              </button>
+              <button class="btn btn-primary" id="btn-next-lesson" onclick="navigateLesson(1)">
+                Next Lesson <i class="fa-solid fa-arrow-right"></i>
+              </button>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </main>
+  </div>
+
+  <!-- Full Video Player Modal -->
+  <div id="video-modal-backdrop" style="display:none; position:fixed; inset:0; background:rgba(0,0,0,0.85); backdrop-filter:blur(6px); z-index:9999; align-items:center; justify-content:center; padding:20px;">
+    <div style="background:#0f172a; width:100%; max-width:900px; border-radius:16px; overflow:hidden; border:1px solid #334155; box-shadow:var(--shadow-lg);">
+      <div style="padding:16px 24px; background:#1e293b; color:#fff; display:flex; justify-content:space-between; align-items:center;">
+        <h3 style="font-size:1.1rem; font-weight:700; margin:0;" id="modal-video-title">Video Lecture Player</h3>
+        <button onclick="closeVideoModal()" style="background:none; border:none; color:#94a3b8; font-size:1.4rem; cursor:pointer;"><i class="fa-solid fa-xmark"></i></button>
+      </div>
+      <div style="padding:12px; background:#000; text-align:center;">
+        <video id="modal-html5-player" controls style="width:100%; max-height:480px; border-radius:8px; outline:none; background:#000;">
+          <source id="modal-mp4-src" src="" type="video/mp4">
+        </video>
+      </div>
+      <div style="padding:14px 24px; background:#0f172a; display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:10px;">
+        <span style="color:#94a3b8; font-size:0.88rem;">Optionally watch externally on YouTube:</span>
+        <a id="modal-direct-youtube-btn" href="#" target="_blank" rel="noopener noreferrer" class="btn btn-sm btn-primary">
+          <i class="fa-brands fa-youtube"></i> Watch on YouTube <i class="fa-solid fa-up-right-from-square"></i>
+        </a>
+      </div>
+    </div>
+  </div>
+
+  <script src="js/data.js"></script>
+  <script src="js/app.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      initCoursePage();
+    });
+  </script>
+</body>
+</html>
