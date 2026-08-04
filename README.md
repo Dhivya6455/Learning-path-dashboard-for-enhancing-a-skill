@@ -68,7 +68,7 @@ learning_path_dashboard_for_enhancing_a_skills/
    mvn spring-boot:run
 
 4. Open the application in your browser
-   http://localhost:8080
+   https://profound-choux-374a11.netlify.app/
 
 ## Workflow
 
